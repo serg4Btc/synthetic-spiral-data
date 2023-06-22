@@ -1,0 +1,31 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def generate_spiral_data(num_samples, num_classes):
+    np.random.seed(0)
+    X = np.zeros((num_samples * num_classes, 2))
+    y = np.zeros(num_samples * num_classes, dtype='uint8')
+    for class_idx in range(num_classes):
+        ix = range(num_samples * class_idx, num_samples * (class_idx + 1))
+        r = np.linspace(0.0, 1, num_samples)
+        t = np.linspace(class_idx * 4, (class_idx + 1) * 4, num_samples) + np.random.randn(num_samples) * 0.2
+        X[ix] = np.c_[r * np.sin(t * 2.5), r * np.cos(t * 2.5)]
+        y[ix] = class_idx
+    return X, y
+
+def visualize_data(X, y):
+    plt.scatter(X[:, 0], X[:, 1], c=y, cmap='viridis')
+    plt.xlabel("X1")
+    plt.ylabel("X2")
+    plt.title("Spiral Data")
+    plt.show()
+
+if __name__ == "__main__":
+    num_samples = 100
+    num_classes = 3
+
+    # Generate spiral data
+    X, y = generate_spiral_data(num_samples, num_classes)
+
+    # Visualize the data
+    visualize_data(X, y)
